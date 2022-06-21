@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,6 +49,24 @@ namespace Data.Services.EntityFramework
         {
             _context.Set<T>().Update(item);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>> expression, List<string> includeProperties = null)
+        {
+            IQueryable<T> contextItem = _context.Set<T>();
+
+            if(includeProperties != null)
+            {
+                foreach (var property in includeProperties)
+                {
+                    contextItem = contextItem.Include(property);
+                }
+            }
+
+            contextItem = contextItem.Where(expression);
+
+            return await contextItem.ToListAsync();
+            
         }
     }
 }

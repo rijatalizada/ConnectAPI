@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Faculty
+    public class HomeHeaderWord : BaseEntity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Faculty> Faculties { get; set; }
-
+        public string Title { get; set; }
+        public string Subtitle { get; set; }
     }
 }
