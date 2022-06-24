@@ -26,7 +26,7 @@ namespace Data.Services.EntityFramework
 
         public async Task<T> GetOne(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _context.Set<T>().FirstOrDefaultAsync(t => t.Id == id);
         }
         public async Task Create(T item)
         {

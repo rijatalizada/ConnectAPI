@@ -3,7 +3,12 @@ using Authentication.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+
 
 namespace ConnectAPI.Controllers
 {
@@ -21,7 +26,9 @@ namespace ConnectAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModelDto model)
         {
-            return Ok(await _userService.Login(model));
+            var login = await _userService.Login(model);
+
+            return Ok(login);
         }
 
         [HttpPost("register")]
@@ -30,5 +37,7 @@ namespace ConnectAPI.Controllers
             var result = await _userService.RegisterAsync(model);
             return Ok(result);
         }
+
+
     }
 }

@@ -10,8 +10,8 @@ namespace Domain.Models.DiscussionsFolder
     public class Rating : BaseEntity
     {
         public int Id { get; set; }
-        [Range(1,5)]
-        public int GivenRating { get; set; }
+        [Range(1, 10)]
+        public float GivenRating { get; set; }
         public int DiscussionId { get; set; }
         public Discussion Discussion { get; set; }
         public string UserId { get; set; }

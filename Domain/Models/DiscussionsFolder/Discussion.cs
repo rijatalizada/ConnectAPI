@@ -11,7 +11,7 @@ namespace Domain.Models.DiscussionsFolder
         public int Id { get; set; }
         public string Title { get; set; }
         public string Question { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }
         public string UserId { get; set; }

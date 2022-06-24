@@ -1,5 +1,8 @@
 ﻿using Data.DAL;
+using Data.Services;
+using Domain.Models;
 using Domain.Models.DiscussionsFolder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +15,13 @@ namespace ConnectAPI.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
+        private readonly IRepositoryService<Course> _repo;
         private readonly AppDbContext _context;
 
-        public CoursesController(AppDbContext context)
+        public CoursesController(AppDbContext context, IRepositoryService<Course> repo)
         {
             _context = context;
+            _repo = repo;
         }
 
         [HttpGet("getAllCourses/{id}")]
@@ -32,5 +37,14 @@ namespace ConnectAPI.Controllers
             
             return Ok(courses);
         }
+
+        [HttpGet("getCourse/{id}")]
+        public async Task<IActionResult> getCourse(int id)
+        {
+            var course = await _repo.GetOne(id);
+            return Ok(course);
+        }
+
+          
     }
 }

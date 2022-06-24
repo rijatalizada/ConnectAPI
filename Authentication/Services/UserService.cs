@@ -5,13 +5,17 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Authentication.Services
 {
@@ -44,9 +48,12 @@ namespace Authentication.Services
                 JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
                 authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 authenticationModel.Email = user.Email;
+                authenticationModel.UserId = user.Id;
                 authenticationModel.UserName = user.UserName;
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
                 authenticationModel.Roles = rolesList.ToList();
+
+
                 return authenticationModel;
             }
             authenticationModel.IsAuthenticated = false;
@@ -61,7 +68,10 @@ namespace Authentication.Services
                 UserName = model.Username,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                Bio = "No Bio Yet",
+                ProfileImage = "https://firebasestorage.googleapis.com/v0/b/connectimages-7c610.appspot.com/o/UsersImage%2FDefualtUser.png?alt=media&token=be6e1ddf-5dec-4659-8a2c-b0dac039a1e6",
+
             };
             var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
             if (userWithSameEmail == null)

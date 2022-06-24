@@ -46,6 +46,7 @@ namespace ConnectAPI
                 options.AddDefaultPolicy(builder =>
                 {
                     builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                    builder.WithOrigins("http://localhost:3001").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                 });
             });
 
@@ -84,7 +85,7 @@ namespace ConnectAPI
                 .AddJwtBearer(o =>
                 {
                     o.RequireHttpsMetadata = false;
-                    o.SaveToken = false;
+                    o.SaveToken = true;
                     o.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
