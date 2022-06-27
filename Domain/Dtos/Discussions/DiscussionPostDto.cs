@@ -10,14 +10,14 @@ namespace Domain.Dtos.Discussions
 {
     public class DiscussionPostDto
     {
-        [Require]
+        [Required]
         [StringLength(maximumLength:50)]
         public string Title { get; set; }
-        [Require]
+        [Required]
         public string Question { get; set; }
-        [Require]
+        [Required]
         public int CourseId { get; set; }
-        [Require]
+        [Required]
         public string UserId { get; set; }
     }
 }

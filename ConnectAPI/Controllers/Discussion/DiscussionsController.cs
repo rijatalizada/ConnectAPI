@@ -40,7 +40,8 @@ namespace ConnectAPI.Controllers
                 CourseName = d.Course.Name,
                 DiscussionReplies = d.Replies.Count,
                 Rating = d.Ratings.Count > 0 ? d.Ratings.Sum(s => s.GivenRating) / d.Ratings.Count : 0,
-                User = d.User.UserName
+                User = d.User.UserName,
+                UserId = d.User.Id
             }).ToListAsync();
 
             return Ok(dicussion);
@@ -61,7 +62,6 @@ namespace ConnectAPI.Controllers
                 Rating = d.Ratings.Count > 0 ? d.Ratings.Sum(s => s.GivenRating) / d.Ratings.Count : 0,
                 User = d.User.UserName
             }).OrderByDescending(s => s.Rating).Take(5).ToListAsync();
-
 
 
             return Ok(discussions);
@@ -114,6 +114,34 @@ namespace ConnectAPI.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
+        [Authorize]
+        [HttpPut("UpdateDiscussion/{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] DiscussionPostDto discussionPostDto)
+        {
+            var discussion = await _repo.GetOne(id);
+
+            if(discussion.UserId == discussionPostDto.UserId)
+            {
+                discussion.CreatedDate = DateTime.Now;
+                discussion.Title = discussionPostDto.Title;
+                discussion.Question = discussionPostDto.Question;
+                await _repo.Update(discussion);
+                return Ok();
+
+            }
+
+            return StatusCode(StatusCodes.Status400BadRequest);
+
+        }
+
+
+        [Authorize(Roles = "Admin,Moderator")]
+        [HttpDelete("DeleteDiscussion/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repo.Delete(id);
+            return StatusCode(StatusCodes.Status200OK);
+        }
 
 
     }

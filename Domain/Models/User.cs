@@ -13,8 +13,9 @@ namespace Domain.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string? Bio { get; set; }
-        public string? ProfileImage { get; set; }
+        public string Bio { get; set; }
+        public string ProfileImage { get; set; }
+        public bool isActive { get; set; } 
         public List<Discussion> Discussions { get; set; }
         public List<DiscussionReply> DiscussionsReplies { get; set; }
         public List<Rating> DiscussionsGivenRating { get; set; }

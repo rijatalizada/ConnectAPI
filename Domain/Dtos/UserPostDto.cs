@@ -5,23 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models
+namespace Domain.Dtos
 {
-    public class RegisterModel
+    public  class UserPostDto
     {
+        [Required]
+        public string Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
-        public string Username { get; set; }
+        [MaxLength(100)]
+        public string UserName { get; set; }
         [Required]
-        public string Email { get; set; }
+        public string Bio { get; set; }
         [Required]
-        public string Password { get; set; }
-        [Required, DataType(DataType.Password) ,Compare(nameof(Password))]
+        public string ProfileImg { get; set; }
+        [Required]
         public string ConfirmPassword { get; set; }
-        
-        
+
+
+
     }
 }

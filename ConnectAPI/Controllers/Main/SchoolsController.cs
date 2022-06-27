@@ -16,14 +16,13 @@ namespace ConnectAPI.Controllers
     [ApiController]
     public class SchoolsController : ControllerBase
     {
-        private readonly IMapper _mapper;
+
         private readonly IRepositoryService<School> _repo;
         private readonly AppDbContext _context;
 
-        public SchoolsController(IRepositoryService<School> repo, IMapper mapper, AppDbContext context)
+        public SchoolsController(IRepositoryService<School> repo, AppDbContext context)
         {
             _repo = repo;
-            _mapper = mapper;
             _context = context;
         }
 
@@ -41,6 +40,11 @@ namespace ConnectAPI.Controllers
             return Ok(schools);
         }
 
+        [HttpGet("GetSchool/{id}")]
+        public async Task<IActionResult> GetOne(int id)
+        {
+            return Ok(await _repo.GetOne(id));
+        }
 
         [Authorize(Roles = "Moderator,Admin")]
         [HttpPost("CreateSchool")]
@@ -70,8 +74,8 @@ namespace ConnectAPI.Controllers
         }
 
         [Authorize(Roles = "Moderator,Admin")]
-        [HttpDelete("RemoveSchool/{id}")]
-        public async Task<IActionResult> RemoveSchool(int id)
+        [HttpDelete("DeleteSchool/{id}")]
+        public async Task<IActionResult> DeleteSchool(int id)
         {
             await _repo.Delete(id);
             return StatusCode(StatusCodes.Status200OK);

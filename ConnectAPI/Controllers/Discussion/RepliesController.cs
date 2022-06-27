@@ -26,8 +26,9 @@ namespace ConnectAPI.Controllers
         }
 
 
+
         [HttpPost("createReply")]
-        public async Task<IActionResult> addReply([FromBody] ReplyPostDto replyDto)
+        public async Task<IActionResult> AddReply([FromBody] ReplyPostDto replyDto)
         {
             
             var reply = new DiscussionReply
@@ -41,5 +42,38 @@ namespace ConnectAPI.Controllers
 
             return StatusCode(StatusCodes.Status201Created);
         }
+
+
+        
+        [HttpPut("UpdateReply/{id}")]
+        public async Task<IActionResult> Update(int id,[FromBody] ReplyPostDto replyPostDto )
+        {
+            var reply = await _repo.GetOne(id);
+
+            if(reply.UserId == replyPostDto.UserId)
+            {
+                reply.Reply = replyPostDto.Reply;
+                reply.UserId = replyPostDto.UserId;
+                reply.DiscussionId = replyPostDto.DiscussionId;
+
+                await _repo.Update(reply);
+
+                return Ok();
+            }
+
+            return StatusCode(StatusCodes.Status400BadRequest);
+
+        }
+
+
+        [Authorize(Roles = "Reply,Moderator")]
+        [HttpDelete("DeleteReply/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repo.Delete(id);
+            return StatusCode(StatusCodes.Status200OK);
+        }
+
+
     }
 }

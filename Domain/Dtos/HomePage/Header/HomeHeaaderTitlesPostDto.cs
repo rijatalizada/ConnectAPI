@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Dtos.HomePage.Header
 {
-    public class HeaderPostDto
+    public class HomeHeaaderTitlesPostDto
     {
         [Required]
         public string Title { get; set; }
         [Required]
-        public string Image { get; set; }
-        public byte? Order { get; set; }
+        public string Subtitle { get; set; }
     }
 }

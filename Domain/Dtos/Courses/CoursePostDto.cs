@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models
+namespace Domain.Dtos.Courses
 {
-    public class HomeHeaderWord : BaseEntity
+    public class CoursePostDto
     {
-        public int Id { get; set; }
         [Required]
-        public string Title { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string Subtitle { get; set; }
+        public int SchoolId { get; set; }
     }
 }

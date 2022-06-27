@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace Domain.Dtos.Discussions.Replies
 {
     public class ReplyPostDto
     {
-        [Require]
+        [Required]
         public string Reply { get; set; }
-        [Require]
+        [Required]
         public string UserId { get; set; }
-        [Require]
+        [Required]
         public int DiscussionId { get; set; }
     }
 }

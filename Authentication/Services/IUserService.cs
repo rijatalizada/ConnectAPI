@@ -1,4 +1,5 @@
 ﻿using Authentication.Dtos;
+using Domain.Dtos;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace Authentication.Services
     {
         Task<LoginResponseDto> Login(LoginModelDto model);
         Task<string> RegisterAsync(RegisterModel model);
+        Task<string> UpdateAsync(UserPostDto userPostDto, User user);
     }
 }

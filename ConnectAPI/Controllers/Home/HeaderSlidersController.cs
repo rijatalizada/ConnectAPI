@@ -16,21 +16,58 @@ namespace ConnectAPI.Controllers
     [ApiController]
     public class HeaderSlidersController : ControllerBase
     {
-        private readonly IMapper _mapper;
+
         private readonly IRepositoryService<Header> _repo;
 
-        public HeaderSlidersController(IRepositoryService<Header> repo, IMapper mapper)
+        public HeaderSlidersController(IRepositoryService<Header> repo)
         {
             _repo = repo;
-            _mapper = mapper;
         }
 
-        
         [HttpGet ("getAllHeaderItems")]
         public async Task<IActionResult> GetHeaders()
         {
             var headers = await _repo.GetAll();
             return Ok(headers);
+        }
+
+
+        //NO NEED FOR TITLES ONLY IMAGES
+
+        [Authorize(Roles = "Moderator,Admin")]
+        [HttpPost("CreateHomeSliderItem")]
+        public async Task<IActionResult> CreateHomeSliderItem([FromBody] HeaderPostDto headerPostDto)
+        {
+            var header = new Header()
+            {
+                Title = "empty",
+                Image = headerPostDto.Image,
+                Order = headerPostDto.Order,
+            };
+
+            await _repo.Create(header);
+
+            return StatusCode(StatusCodes.Status201Created);
+        }
+
+        [Authorize(Roles = "Moderator,Admin")]
+        [HttpPut("UpdateHomeSliderItem/{id}")]
+        public async Task<IActionResult> UpdateHomeSliderItem(int id, [FromBody] HeaderPostDto headerPostDto)
+        {
+            var header = await _repo.GetOne(id);
+            header.Image = headerPostDto.Image;
+            header.Order = headerPostDto.Order;
+            await _repo.Update(header);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Moderator,Admin")]
+        [HttpDelete("DeleteHomeSliderItem/{id}")]
+        public async Task<IActionResult> DeleteHomeSliderItem(int id)
+        {
+            await _repo.Delete(id);
+            return StatusCode(StatusCodes.Status200OK);
         }
 
     }

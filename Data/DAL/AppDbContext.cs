@@ -29,6 +29,8 @@ namespace Data.DAL
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogEvaluation> BlogsEvaluations { get; set; }
         public DbSet<BlogComment> BlogsComments { get; set; }
+        public DbSet<AboutContent> AboutContent { get; set; }
+        public DbSet<OurGoals> OurGoals { get; set; }
 
 
     }

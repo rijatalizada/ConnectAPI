@@ -1,7 +1,7 @@
 using Authentication.Models;
 using Authentication.Services;
 using Data.DAL;
-using Data.Mapper;
+
 using Data.Services;
 using Data.Services.EntityFramework;
 using Domain.Hubs;
@@ -68,7 +68,6 @@ namespace ConnectAPI
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
 
-            services.AddAutoMapper(typeof(MapperProfile));
 
             services.AddScoped(typeof(IRepositoryService<>), typeof(EfRepositoryService<>));
 
@@ -122,7 +121,6 @@ namespace ConnectAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<LiveChat>("/chat");
             });
         }
     }

@@ -9,12 +9,12 @@ namespace Domain.Models.DiscussionsFolder
 {
     public class RatingPostDto
     {
-        [Require]
+        [Required]
         [Range(1, 5)]
         public int GivenRating { get; set; }
-        [Require]
+        [Required]
         public int DiscussionId { get; set; }
-        [Require]
+        [Required]
         public string UserId{ get; set; }
     }
 }
